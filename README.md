@@ -14,7 +14,7 @@ Le projet s'organise autour des fichiers suivants :
     
 *   `administration.sql` : Scripts liés aux opérations d'administration, de sauvegarde (pg\_dump) et de restauration (pg\_restore).
     
-*   `backup\_ecommerce.dump / backup\_ecommerce.sql` : Fichiers de sauvegarde (dumps) de la base de données.
+*   `backup_ecommerce.dump / backup_ecommerce.sql` : Fichiers de sauvegarde (dumps) de la base de données.
     
 
 1\. Instructions de mise en place de l'environnement
