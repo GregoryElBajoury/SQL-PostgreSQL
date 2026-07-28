@@ -1,4 +1,6 @@
--- -----------------------Roles et utilisateurs---------------------------
+-- ==================================================================================================
+-- FICHIER D'ADMINISTRATION : GESTION DES RÔLES ET UTILISATEURS (PostgreSQL)
+-- ==================================================================================================
 
 -- Q1 — Créer un rôle ecommerce_readonly qui ne peut que lire les données
 create role ecommerce_readonly;
@@ -16,7 +18,9 @@ grant ecommerce_readonly to analyste_user;
 create user engineer_user with password 'engineer123';
 grant ecommerce_engineer to engineer_user;
 
--------------------------------- Privileges ------------------------------
+-- ==================================================================================================
+-- ATTRIBUTION DES PRIVILÈGES ASSOCIÉS (Nécessaire pour que les rôles agissent)
+-- ==================================================================================================
 
 -- Q5 — Donner accès à la base de données aux deux rôles
 grant connect on database postgres to ecommerce_readonly, ecommerce_engineer;
@@ -39,7 +43,9 @@ alter default privileges in schema public grant select, insert, update, delete o
 revoke all privileges on all tables in schema public from public;
 revoke all privileges on schema public from public;
 
-------------------------------------------------- INDEX ----------------------------------------
+-- ==================================================================================================
+--                                       INDEX
+-- ==================================================================================================
 
 -- Q11 — Créer un index sur la colonne client_id de la table commandes
 create index if not exists idx_commandes_client_id on commandes(client_id);
@@ -69,8 +75,15 @@ explain analyse select * from commandes where statut = 'livre';
 --set enable_seqscan = off;
 explain analyse select * from  commandes where date_commande = '2023-01-05';
 
------------------------------------------------------------- CONTRAINTES ------------------------------------------------------------------------------------------
-
+-- ======================================================================================================================
+--                                       CONTRAINTES
+-- ======================================================================================================================
+-- NOTE TECHNIQUE : 
+-- L'utilisation des blocs procéduraux anonymes (DO $$ ... BEGIN ... EXCEPTION WHEN duplicate_object THEN NULL END $$;) 
+-- permet de rendre ce script entièrement idempotent. Cela signifie qu'on peut exécuter le fichier plusieurs fois 
+-- d'affilée sans blocage : si une contrainte existe déjà dans la base, PostgreSQL intercepte l'erreur 'duplicate_object' 
+-- et l'ignore proprement au lieu d'interrompre l'exécution.
+-------------------------------------------------------------------------------------------------------------------------
 -- Q20 — Ajouter une contrainte : prix d'un produit toujours positif
 do $$ 
 begin
@@ -124,7 +137,9 @@ end $$;
 
 
 
--------------------------------------------------------- VÉRIFICATIONS ----------------------------------------------------------------------------------------
+-- ===============================================================================================================
+--                                       VERIFICATIONS
+-- ===============================================================================================================
 
 -- Q26 — Lister tous les index créés sur les tables du schéma public
 select 
@@ -174,8 +189,9 @@ order by
     grantee, 
     table_name, 
     privilege_type;
-
--------------------------------------- SAUVEGARDE (à exécuter dans le terminal) ------------------------------------------------------------------------------
+-- ===============================================================================================================
+--                                       SAUVEGARDE (A EXECUTER DANS LE TERMINAL)
+-- ===============================================================================================================
  
 
 -- Q29 — Faire un dump compressé de la base de données
@@ -206,32 +222,8 @@ SELECT 'produits', COUNT(*) FROM produits;
 
 
 
--------------------------------------------------------------- FIN DES EXERCICES ---------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- ===============================================================================================================
+--                                                   FIN DES EXERCICES
+-- ===============================================================================================================
 
 
