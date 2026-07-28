@@ -37,7 +37,7 @@ git clone [https://github.com/GregoryElBajoury/SQL-PostgreSQL.git](https://githu
 cd SQL-PostgreSQl
 ```
     
-4.  Ouvre ton terminal ou ton client SQL connecté à ton serveur PostgreSQL local.
+4.  Ouvrez votre terminal ou votre client SQL connecté à votre serveur PostgreSQL local.
     
 
 2\. Chargement du Dataset et de la structure
