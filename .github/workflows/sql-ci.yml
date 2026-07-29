@@ -9,10 +9,15 @@ on:
 jobs:
   test-sql:
     runs-on: ubuntu-latest
+    
+    # Stratégie Matrix : Teste simultanément sur PostgreSQL 14, 15 et 16
+    strategy:
+      matrix:
+        postgres-version: [ '14', '15', '16' ]
 
     services:
       postgres:
-        image: postgres:15
+        image: postgres:${{ matrix.postgres-version }}
         env:
           POSTGRES_DB: postgres
           POSTGRES_USER: postgres
@@ -29,10 +34,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run SQL Scripts on Test Database
+      - name: Run SQL Scripts with Strict Error Handling
         run: |
-          echo "--- Exécution du script de setup (tables, relations) ---"
-          psql "postgresql://postgres:password123@localhost:5432/postgres" -f setup.sql
+          echo "--- Exécution du setup sur PostgreSQL v${{ matrix.postgres-version }} ---"
+          # v 1 = arrêter immédiatement le script à la première erreur SQL
+          psql -v ON_ERROR_STOP=1 "postgresql://postgres:password123@localhost:5432/postgres" -f setup.sql
 
-          echo "--- Exécution du script d'administration (rôles, index, contraintes) ---"
-          psql "postgresql://postgres:password123@localhost:5432/postgres" -f administration.sql
+          echo "--- Exécution de l'administration ---"
+          psql -v ON_ERROR_STOP=1 "postgresql://postgres:password123@localhost:5432/postgres" -f administration.sql
