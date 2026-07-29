@@ -1,7 +1,13 @@
 Brief SQL & PostgreSQL - E-commerce
 ===================================
 
-Ce dépôt contient les scripts, les fichiers de configuration et les procédures de sauvegarde/restauration réalisés dans le cadre du brief sur la gestion de bases de données avec PostgreSQL.
+Ce dépôt contient les scripts, les fichiers de configuration, les procédures de sauvegarde/restauration ainsi que le pipeline d'intégration continue (CI) réalisés dans le cadre du brief sur la gestion de bases de données avec PostgreSQL.
+
+## Statut de la CI
+[![SQL Validation CI](https://github.com/GregoryElBajoury/SQL-PostgreSQL/actions/workflows/sql-ci.yml/badge.svg)](https://github.com/GregoryElBajoury/SQL-PostgreSQL/actions)
+
+Le projet est testé et validé automatiquement sur les versions **14**, **15** et **16** de PostgreSQL via GitHub Actions.
+
 
 Structure du Projet
 -------------------
@@ -22,7 +28,7 @@ Le projet s'organise autour des fichiers suivants :
 
 Pour exécuter et tester ce projet localement, assurez vous d'avoir installé les outils suivants :
 
-*   PostgreSQL (version 13 ou supérieure recommandée)
+*   PostgreSQL (version 14, 15 ou 16 recommandée)
     
 *   Un client SQL compatible comme DBeaver
     
