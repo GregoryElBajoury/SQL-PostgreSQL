@@ -48,6 +48,9 @@ jobs:
           echo "--- 4. Test Q30 : Dump SQL lisible ---"
           PGPASSWORD=password123 pg_dump -h localhost -U postgres -F p -v -f backup_ecommerce.sql postgres
 
-          echo "--- 5. Test Q31 : Création de la base restaurée et restauration ---"
-          psql -v ON_ERROR_STOP=1 "postgresql://postgres:password123@localhost:5432/postgres" -c "DROP DATABASE IF EXISTS ecommerce_restauree; CREATE DATABASE ecommerce_restauree;"
+          echo "--- 5. Test Q31 : Nettoyage et création de la base restaurée ---"
+          psql -v ON_ERROR_STOP=1 "postgresql://postgres:password123@localhost:5432/postgres" -c "DROP DATABASE IF EXISTS ecommerce_restauree;"
+          psql -v ON_ERROR_STOP=1 "postgresql://postgres:password123@localhost:5432/postgres" -c "CREATE DATABASE ecommerce_restauree;"
+
+          echo "--- 6. Restauration du dump ---"
           PGPASSWORD=password123 pg_restore -h localhost -U postgres -d ecommerce_restauree -v backup_ecommerce.dump
