@@ -35,7 +35,7 @@ Pour exécuter et tester ce projet localement, assurez vous d'avoir installé le
 
 Étapes d'installation :
 
-1.  Clone le dépôt sur votre machine locale :
+1.  Clonez le dépôt sur votre machine locale :
 
 ```
 git clone [https://github.com/GregoryElBajoury/SQL-PostgreSQL.git](https://github.com/GregoryElBajoury/SQL-PostgreSQL.git)
