@@ -195,19 +195,19 @@ order by
  
 
 -- Q29 — Faire un dump compressé de la base de données
--- Commande à exécuter dans le terminal :
-	pg_dump -U postgres -F c -b -v -f backup_ecommerce.dump postgres
+-- Commande à exécuter dans le terminal ( a decommenter) :
+	-- pg_dump -U postgres -F c -b -v -f backup_ecommerce.dump postgres
 
 
 -- Q30 — Faire un dump SQL lisible de la base de données
--- Commande à exécuter dans le terminal :
-	pg_dump -U postgres -F p -v -f backup_ecommerce.sql postgres
+-- Commande à exécuter dans le terminal (a décommenter) :
+	-- pg_dump -U postgres -F p -v -f backup_ecommerce.sql postgres
 
 
 -- Q31 — Créer une nouvelle base ecommerce_restauree et y restaurer le dump compressé
 -- Commandes à exécuter dans le terminal :
 create database ecommerce_restauree;
-	pg_restore -U postgres -d ecommerce_restauree -v backup_ecommerce.dump
+	-- g_restore -U postgres -d ecommerce_restauree -v backup_ecommerce.dump
 
 		
 -- Q32 — Vérifier que les 4 tables et leurs données sont bien présentes

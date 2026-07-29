@@ -34,11 +34,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run SQL Scripts with Strict Error Handling
+      - name: Run SQL Scripts & Test Backup/Restore
         run: |
-          echo "--- Exécution du setup sur PostgreSQL v${{ matrix.postgres-version }} ---"
-          # v 1 = arrêter immédiatement le script à la première erreur SQL
+          echo "--- 1. Exécution du setup ---"
           psql -v ON_ERROR_STOP=1 "postgresql://postgres:password123@localhost:5432/postgres" -f setup.sql
 
-          echo "--- Exécution de l'administration ---"
+          echo "--- 2. Exécution de l'administration ---"
           psql -v ON_ERROR_STOP=1 "postgresql://postgres:password123@localhost:5432/postgres" -f administration.sql
+
+          echo "--- 3. Test Q29 : Dump compressé ---"
+          pg_dump -h localhost -U postgres -F c -b -v -f backup_ecommerce.dump postgres
+
+          echo "--- 4. Test Q30 : Dump SQL lisible ---"
+          pg_dump -h localhost -U postgres -F p -v -f backup_ecommerce.sql postgres
+
+          echo "--- 5. Test Q31 : Création de la base restaurée et restauration ---"
+          psql -v ON_ERROR_STOP=1 "postgresql://postgres:password123@localhost:5432/postgres" -c "CREATE DATABASE ecommerce_restauree;"
+          pg_restore -h localhost -U postgres -d ecommerce_restauree -v backup_ecommerce.dump
